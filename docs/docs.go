@@ -17,6 +17,65 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/room": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉の(ステータス)を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "secret_words",
+                        "name": "secret_words",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controller.GetRoom.JsonResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉の(ステータス)を格納するAPI",
+                "parameters": [
+                    {
+                        "description": "request json",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.PostRoom.JsonRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "ping pong",
@@ -35,6 +94,27 @@ const docTemplate = `{
             }
         }
     },
+    "definitions": {
+        "controller.GetRoom.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "isStart": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "controller.PostRoom.JsonRequest": {
+            "type": "object",
+            "properties": {
+                "isStart": {
+                    "type": "boolean"
+                },
+                "secretWords": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it

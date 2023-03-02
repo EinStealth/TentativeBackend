@@ -23,6 +23,16 @@ func GetRouter() *gin.Engine {
 		})
 	})
 
+	// v1
+	v1 := r.Group("/api/v1")
+	{
+		// 指定された合言葉の(ステータス)を返す
+		v1.GET("/room", GetRoom)
+
+		// 指定された合言葉の(ステータス)を返す
+		v1.POST("/room", PostRoom)
+	}
+
 	// swagger ui
 	docs.SwaggerInfo.BasePath = "/"
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
