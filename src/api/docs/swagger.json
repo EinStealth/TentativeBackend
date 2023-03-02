@@ -8,7 +8,7 @@
       "version": "1.0"
   },
   "paths": {
-    "/api/v1/room": {
+    "/api/v1/rooms": {
         "get": {
             "consumes": [
                 "application/json"

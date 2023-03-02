@@ -17,7 +17,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/room": {
+        "/api/v1/rooms": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -106,10 +106,10 @@ const docTemplate = `{
         "controller.PostRoom.JsonRequest": {
             "type": "object",
             "properties": {
-                "isStart": {
+                "is_start": {
                     "type": "boolean"
                 },
-                "secretWords": {
+                "secret_words": {
                     "type": "string"
                 }
             }

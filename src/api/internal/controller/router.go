@@ -27,10 +27,10 @@ func GetRouter() *gin.Engine {
 	v1 := r.Group("/api/v1")
 	{
 		// 指定された合言葉の(ステータス)を返す
-		v1.GET("/room", GetRoom)
+		v1.GET("/rooms", GetRoom)
 
 		// 指定された合言葉の(ステータス)を返す
-		v1.POST("/room", PostRoom)
+		v1.POST("/rooms", PostRoom)
 	}
 
 	// swagger ui

@@ -12,7 +12,7 @@ func GetBySecretWords(secretWords string) ([]Room, error) {
 
 	// secret_words指定でroomのデータを取得
 	var room []Room
-	_, err = dbmap.Select(&room, "SELECT * FROM room WHERE secret_words=?", secretWords)
+	_, err = dbmap.Select(&room, "SELECT * FROM rooms WHERE secret_words=?", secretWords)
 	if err != nil {
 		return []Room{}, err
 	}

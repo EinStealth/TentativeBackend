@@ -14,8 +14,8 @@ func InitDb() (*gorp.DbMap, error) {
 		"%s:%s@tcp(%s)/%s?charset=utf8&parseTime=true",
 		"root",     // username
 		"passwd",   // password
-		"hikky-db", // hostname
-		"hikky-db", // database
+		"tentative-db", // hostname
+		"tentative-db", // database
 	)
 	db, err := sql.Open("mysql", path)
 	if err != nil {
