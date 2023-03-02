@@ -1,26 +1,14 @@
 package main
 
 import (
-	"github.com/EinStealth/TentativeBackend/model"
-
-	"github.com/gin-gonic/gin"
+	"github.com/EinStealth/TentativeBackend/internal/controller"
 )
 
+// @title          Swagger Example API
+// @version        1.0
+// @description    This is a sample server celler server.
+// @termsOfService http://swagger.io/terms/
 func main() {
-	r := gin.Default()
-
-	r.GET("/questions", func(c *gin.Context) {
-        // 値を取得する
-		questins := model.GetAll()
-        // JSONで返す
-		c.JSON(200, questins)
-	})
-	r.GET("/:tag/:num", func(c *gin.Context) {
-		tag := c.Param("tag")
-		num := c.Param("num")
-		question := model.GetBy(tag, num)
-		c.JSON(200, question)
-	})
-
-	r.Run()
+	router := controller.GetRouter()
+	router.Run(":8080")
 }
