@@ -1,0 +1,17 @@
+version: "3"
+services:
+  tentative-db:
+    build: ./src/db
+    image: atomic/tentative-db
+    environment:
+    - MYSQL_ROOT_PASSWORD=passwd
+    ports:
+    - "3306:3306"
+
+  tentative-api:
+    build: ./src/api
+    image: atomic/tentative-api
+    ports:
+    - 8080:8080
+    depends_on:
+    - tentative-db
