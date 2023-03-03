@@ -44,7 +44,7 @@ func GetRoom(c *gin.Context) {
 	// 受け取ったものをJsonResponseに詰め直す
 	type JsonResponse struct {
 		SecretWords string `json:"secret_words"`
-		IsStart     bool   `json:"is_start"`
+		IsStart     int    `json:"is_start"`
 	}
 	jsonRes := make([]JsonResponse, len(res))
 	for i := 0; i < len(res); i++ {
@@ -66,7 +66,7 @@ func PostRoom(c *gin.Context) {
 	// param取得
 	type JsonRequest struct {
 		SecretWords string  `json:"secret_words"`
-		IsStart     bool    `json:"is_start"`
+		IsStart     int     `json:"is_start"`
 	}
 	var req JsonRequest
 	err := c.ShouldBindJSON(&req)
@@ -85,6 +85,46 @@ func PostRoom(c *gin.Context) {
 		})
 		return
 	}
+	c.JSON(200, gin.H{
+		"message": "success",
+	})
+}
+
+// @Summary プレイヤーの状態を更新するAPI
+// @Param   id     path int true "player id"
+// @Param   status path int true "player status"
+// @Accept  json
+// @Produce json
+// @Success 200 {string} string "success"
+// @Filure  400 {string} string "引数が違います"
+// @Filure  500 {string} string err.Error()
+// @Router  /api/v1/players/{id}/status/{status} [post]
+func UpdateRoomIsStart(c *gin.Context) {
+	// パスパラメータ取得
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "idが違います",
+		})
+		return
+	}
+	is_start, err := strconv.Atoi(c.Param("is_start"))
+	if err != nil || is_start < 0 || 1 < is_start {
+		c.JSON(400, gin.H{
+			"message": "is_startが違います",
+		})
+		return
+	}
+
+	// isstart更新
+	err = room.UpdateIsStart(id, is_start)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
 		"message": "success",
 	})

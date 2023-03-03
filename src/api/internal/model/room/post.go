@@ -3,7 +3,7 @@ package room
 import "github.com/EinStealth/TentativeBackend/internal/model"
 
 // spacetimesにinsertする
-func Post(secret_words string, is_start bool) error {
+func Post(secret_words string, is_start int) error {
 	// dbmap初期化
 	dbmap, err := model.InitDb()
 	if err != nil {

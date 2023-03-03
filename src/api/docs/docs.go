@@ -52,6 +52,41 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/rooms/{id}/is_start/{is_start}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "部屋の状態を更新するAPI",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "room id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "is_start",
+                        "name": "is_start",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/rooms": {
             "get": {
                 "consumes": [
@@ -259,7 +294,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "isStart": {
-                    "type": "boolean"
+                    "type": "integer"
                 }
             }
         },
@@ -267,7 +302,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "is_start": {
-                    "type": "boolean"
+                    "type": "integer"
                 },
                 "secret_words": {
                     "type": "string"
