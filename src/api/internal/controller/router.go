@@ -31,6 +31,12 @@ func GetRouter() *gin.Engine {
 
 		// 指定された合言葉の(ステータス)を返す
 		v1.POST("/rooms", PostRoom)
+
+		// 指定された合言葉の(ユーザーネーム、アイコン、ステータス)を返す
+		v1.GET("/players", GetPlayer)
+
+		// 指定された合言葉の(ユーザーネーム、アイコン、ステータス)を返す
+		v1.POST("/players", PostPlayer)
 	}
 
 	// swagger ui

@@ -76,6 +76,65 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/players": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉の(ユーザーネーム、アイコン、ステータス)を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "secret_words",
+                        "name": "secret_words",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controller.GetPlayer.JsonResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉の(ユーザーネーム、アイコン、ステータス)を格納するAPI",
+                "parameters": [
+                    {
+                        "description": "request json",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.PostPlayer.JsonRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "ping pong",
@@ -111,6 +170,37 @@ const docTemplate = `{
                 },
                 "secret_words": {
                     "type": "string"
+                }
+            }
+        },
+        "controller.GetPlayer.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.PostPlayer.JsonRequest": {
+            "type": "object",
+            "properties": {
+                "secret_words": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         }
