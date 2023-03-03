@@ -16,10 +16,10 @@ CREATE TABLE `rooms` (
 -- mock data
 INSERT INTO `rooms` VALUES
 (
-    1, "test1", true
+    1, "test1", 0
 ),
 (
-    2, "test2", false
+    2, "test2", 0
 );
 
 DROP TABLE IF EXISTS `players`;
