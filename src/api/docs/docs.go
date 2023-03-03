@@ -135,6 +135,72 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/locations": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉・相対時間の(位置、ステータス)を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "secret_words",
+                        "name": "secret_words",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "relative_time",
+                        "name": "relative_time",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/controller.GetLocation.JsonResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "指定された合言葉・相対時間の(位置、ステータス)を格納するAPI",
+                "parameters": [
+                    {
+                        "description": "request json",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.PostLocation.JsonRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "ping pong",
@@ -198,6 +264,43 @@ const docTemplate = `{
                 },
                 "icon": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.GetLocation.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "relative_time": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.PostLocation.JsonRequest": {
+            "type": "object",
+            "properties": {
+                "secret_words": {
+                    "type": "string"
+                },
+                "relative_time": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
                 },
                 "status": {
                     "type": "integer"

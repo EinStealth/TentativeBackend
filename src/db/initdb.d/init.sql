@@ -40,3 +40,23 @@ INSERT INTO `players` VALUES
 (
     2, "test1", "player02", 2, 1
 );
+
+DROP TABLE IF EXISTS `locations`;
+CREATE TABLE `locations` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `secret_words` varchar(10),
+    `relative_time` varchar(10),
+    `latitude` float,
+    `longitude` float,
+    `status` int,
+    PRIMARY KEY (`id`)
+);
+
+-- mock data
+INSERT INTO `locations` VALUES
+(
+    1, "test1", "12:00:00", 10.0, 10.0, 1
+),
+(
+    2, "test1", "12:00:00", 10.1, 10.1, 2
+);
