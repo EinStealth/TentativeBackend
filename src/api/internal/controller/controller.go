@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/EinStealth/TentativeBackend/internal/model/room"
 	"github.com/EinStealth/TentativeBackend/internal/model/player"
@@ -159,6 +161,46 @@ func PostPlayer(c *gin.Context) {
 		})
 		return
 	}
+	c.JSON(200, gin.H{
+		"message": "success",
+	})
+}
+
+// @Summary プレイヤーの状態を更新するAPI
+// @Param   id     path int true "player id"
+// @Param   status path int true "player status"
+// @Accept  json
+// @Produce json
+// @Success 200 {string} string "success"
+// @Filure  400 {string} string "引数が違います"
+// @Filure  500 {string} string err.Error()
+// @Router  /api/v1/players/{id}/status/{status} [post]
+func UpdatePlayerStatus(c *gin.Context) {
+	// パスパラメータ取得
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "idが違います",
+		})
+		return
+	}
+	status, err := strconv.Atoi(c.Param("status"))
+	if err != nil || status < 1 || 4 < status {
+		c.JSON(400, gin.H{
+			"message": "statusが違います",
+		})
+		return
+	}
+
+	// status更新
+	err = player.UpdateStatus(id, status)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
 		"message": "success",
 	})

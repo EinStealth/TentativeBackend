@@ -32,6 +32,9 @@ func GetRouter() *gin.Engine {
 		// 指定された合言葉の(ステータス)を返す
 		v1.POST("/rooms", PostRoom)
 
+		// プレイヤーの状態を更新するAPI
+		v1.POST("/players/:id/status/:status", UpdatePlayerStatus)
+
 		// 指定された合言葉の(ユーザーネーム、アイコン、ステータス)を返す
 		v1.GET("/players", GetPlayer)
 
