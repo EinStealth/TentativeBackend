@@ -217,13 +217,7 @@ func PostPlayer(c *gin.Context) {
 // @Router  /api/v1/players/{id}/status/{status} [post]
 func UpdatePlayerStatus(c *gin.Context) {
 	// パスパラメータ取得
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "idが違います",
-		})
-		return
-	}
+	name := c.Param("name")
 	status, err := strconv.Atoi(c.Param("status"))
 	if err != nil || status < 1 || 4 < status {
 		c.JSON(400, gin.H{
@@ -233,7 +227,7 @@ func UpdatePlayerStatus(c *gin.Context) {
 	}
 
 	// status更新
-	err = player.UpdateStatus(id, status)
+	err = player.UpdateStatus(name, status)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),
