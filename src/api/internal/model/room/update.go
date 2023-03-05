@@ -5,7 +5,7 @@ import (
 )
 
 // Roomのisstartを更新する
-func UpdateIsStart(id, is_start int) error {
+func UpdateIsStart(secret_words string, is_start int) error {
 	// db初期化
 	dbmap, err := model.InitDb()
 	if err != nil {
@@ -15,14 +15,14 @@ func UpdateIsStart(id, is_start int) error {
 
 	// dbからプレイヤーを取得
 	roomData := Room{}
-	err = dbmap.SelectOne(&roomData, "SELECT * FROM `rooms` WHERE `id` = ?", id)
+	err = dbmap.SelectOne(&roomData, "SELECT * FROM `rooms` WHERE `secret_words` = ?", secret_words)
 	if err != nil {
 		return err
 	}
 
 	// status更新
 	roomData.IsStart = is_start
-	dbmap.AddTableWithName(Room{}, "rooms").SetKeys(true, "Id")
+	dbmap.AddTableWithName(Room{}, "rooms").SetKeys(true, "SecretWords")
 	_, err = dbmap.Update(&roomData)
 	if err != nil {
 		return err

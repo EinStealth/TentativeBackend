@@ -17,7 +17,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/players/{id}/status/{status}": {
+        "/api/v1/players/{name}/status/{status}": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -28,9 +28,9 @@ const docTemplate = `{
                 "summary": "プレイヤーの状態を更新するAPI",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "player id",
-                        "name": "id",
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
                         "in": "path",
                         "required": true
                     },
@@ -52,7 +52,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/rooms/{id}/is_start/{is_start}": {
+        "/api/v1/rooms/{secret_words}/is_start/{is_start}": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -63,9 +63,9 @@ const docTemplate = `{
                 "summary": "部屋の状態を更新するAPI",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "room id",
-                        "name": "id",
+                        "type": "string",
+                        "description": "secret_words",
+                        "name": "secret_words",
                         "in": "path",
                         "required": true
                     },

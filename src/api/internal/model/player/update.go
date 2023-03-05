@@ -5,7 +5,7 @@ import (
 )
 
 // Playerのstatusを更新する
-func UpdateStatus(id, status int) error {
+func UpdateStatus(name string, status int) error {
 	// db初期化
 	dbmap, err := model.InitDb()
 	if err != nil {
@@ -15,14 +15,14 @@ func UpdateStatus(id, status int) error {
 
 	// dbからプレイヤーを取得
 	playerData := Player{}
-	err = dbmap.SelectOne(&playerData, "SELECT * FROM `players` WHERE `id` = ?", id)
+	err = dbmap.SelectOne(&playerData, "SELECT * FROM `players` WHERE `name` = ?", name)
 	if err != nil {
 		return err
 	}
 
 	// status更新
 	playerData.Status = status
-	dbmap.AddTableWithName(Player{}, "players").SetKeys(true, "Id")
+	dbmap.AddTableWithName(Player{}, "players").SetKeys(true, "Name")
 	_, err = dbmap.Update(&playerData)
 	if err != nil {
 		return err

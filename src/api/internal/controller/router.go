@@ -27,7 +27,7 @@ func GetRouter() *gin.Engine {
 	v1 := r.Group("/api/v1")
 	{
 		// 部屋の状態を更新するAPI
-		v1.POST("/rooms/:id/is_start/:is_start", UpdateRoomIsStart)
+		v1.POST("/rooms/:secret_words/is_start/:is_start", UpdateRoomIsStart)
 
 		// 指定された合言葉の(ステータス)を返す
 		v1.GET("/rooms", GetRoom)
@@ -36,7 +36,7 @@ func GetRouter() *gin.Engine {
 		v1.POST("/rooms", PostRoom)
 
 		// プレイヤーの状態を更新するAPI
-		v1.POST("/players/:id/status/:status", UpdatePlayerStatus)
+		v1.POST("/players/:name/status/:status", UpdatePlayerStatus)
 
 		// 指定された合言葉の(ユーザーネーム、アイコン、ステータス)を返す
 		v1.GET("/players", GetPlayer)

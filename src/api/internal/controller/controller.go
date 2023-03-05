@@ -101,13 +101,7 @@ func PostRoom(c *gin.Context) {
 // @Router  /api/v1/players/{id}/status/{status} [post]
 func UpdateRoomIsStart(c *gin.Context) {
 	// パスパラメータ取得
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "idが違います",
-		})
-		return
-	}
+	secret_words := c.Param("secret_words")
 	is_start, err := strconv.Atoi(c.Param("is_start"))
 	if err != nil || is_start < 0 || 1 < is_start {
 		c.JSON(400, gin.H{
@@ -117,7 +111,7 @@ func UpdateRoomIsStart(c *gin.Context) {
 	}
 
 	// isstart更新
-	err = room.UpdateIsStart(id, is_start)
+	err = room.UpdateIsStart(secret_words, is_start)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),
@@ -217,13 +211,7 @@ func PostPlayer(c *gin.Context) {
 // @Router  /api/v1/players/{id}/status/{status} [post]
 func UpdatePlayerStatus(c *gin.Context) {
 	// パスパラメータ取得
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "idが違います",
-		})
-		return
-	}
+	name := c.Param("name")
 	status, err := strconv.Atoi(c.Param("status"))
 	if err != nil || status < 1 || 4 < status {
 		c.JSON(400, gin.H{
@@ -233,7 +221,7 @@ func UpdatePlayerStatus(c *gin.Context) {
 	}
 
 	// status更新
-	err = player.UpdateStatus(id, status)
+	err = player.UpdateStatus(name, status)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),
