@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/EinStealth/TentativeBackend/internal/model/room"
 	"github.com/EinStealth/TentativeBackend/internal/model/player"
+	"github.com/EinStealth/TentativeBackend/internal/model/playername"
 	"github.com/EinStealth/TentativeBackend/internal/model/location"
 )
 
@@ -229,6 +230,73 @@ func UpdatePlayerStatus(c *gin.Context) {
 		return
 	}
 
+	c.JSON(200, gin.H{
+		"message": "success",
+	})
+}
+
+// @Summary 指定された合言葉の(ステータス)を取得する
+// @Param   time query string true "time"
+// @Accept  json
+// @Produce json
+// @Success 200 {array} controller.GetRoom.JsonResponse
+// @Filure  400 {string} string err.Error()
+// @Filure  500 {string} string err.Error()
+// @Router  /api/v1/room [get]
+func GetPlayerName(c *gin.Context) {
+	// param取得
+	name := c.Query("name")
+
+	// 指定した合言葉のステータスを取得
+	res, err := playername.GetByName(name)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// 受け取ったものをJsonResponseに詰め直す
+	type JsonResponse struct {
+		Name         string  `json:"name"`
+	}
+	jsonRes := make([]JsonResponse, len(res))
+	for i := 0; i < len(res); i++ {
+		jsonRes[i].Name = res[i].Name
+	}
+	c.JSON(200, jsonRes)
+}
+
+// @Summary 指定された合言葉の(ステータス)を格納するAPI
+// @Param   request body controller.PostRoom.JsonRequest true "request json"
+// @Accept  json
+// @Produce application/json
+// @Success 200 {string} string "success"
+// @Filure  400 {string} string err.Error()
+// @Filure  500 {string} string err.Error()
+// @Router  /api/v1/room [post]
+func PostPlayerName(c *gin.Context) {
+	// param取得
+	type JsonRequest struct {
+		Name  string  `json:"name"`
+	}
+	var req JsonRequest
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// playerに受け取ったパラメータをpostする
+	err = playername.Post(req.Name)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
 	c.JSON(200, gin.H{
 		"message": "success",
 	})

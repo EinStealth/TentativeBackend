@@ -44,6 +44,10 @@ func GetRouter() *gin.Engine {
 		// 指定された合言葉の(ユーザーネーム、アイコン、ステータス)を返す
 		v1.POST("/players", PostPlayer)
 
+		v1.GET("/playernames", GetPlayerName)
+
+		v1.POST("/playernames", PostPlayerName)
+
 		// 指定された合言葉・相対時間の(位置、ステータス)を返す
 		v1.GET("/locations", GetLocation)
 

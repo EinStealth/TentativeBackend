@@ -60,3 +60,19 @@ INSERT INTO `locations` VALUES
 (
     2, "test1", "12:00:00", 10.1, 10.1, 2
 );
+
+DROP TABLE IF EXISTS `playernames`;
+CREATE TABLE `playernames` (
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `name` varchar(10),
+    PRIMARY KEY (`id`)
+);
+
+-- mock data
+INSERT INTO `playernames` VALUES
+(
+    1, "player01"
+),
+(
+    2, "player02"
+);
