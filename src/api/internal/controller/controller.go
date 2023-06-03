@@ -45,11 +45,13 @@ func GetRoom(c *gin.Context) {
 	type JsonResponse struct {
 		SecretWords string `json:"secret_words"`
 		IsStart     int    `json:"is_start"`
+		Deamon      int    `json:"deamon"`
 	}
 	jsonRes := make([]JsonResponse, len(res))
 	for i := 0; i < len(res); i++ {
 		jsonRes[i].SecretWords = res[i].SecretWords
 		jsonRes[i].IsStart = res[i].IsStart
+		jsonRes[i].Deamon = res[i].Deamon
 	}
 	c.JSON(200, jsonRes)
 }
@@ -67,6 +69,7 @@ func PostRoom(c *gin.Context) {
 	type JsonRequest struct {
 		SecretWords string  `json:"secret_words"`
 		IsStart     int     `json:"is_start"`
+		Deamon      int     `json:"deamon"`
 	}
 	var req JsonRequest
 	err := c.ShouldBindJSON(&req)
@@ -78,7 +81,7 @@ func PostRoom(c *gin.Context) {
 	}
 
 	// roomに受け取ったパラメータをpostする
-	err = room.Post(req.SecretWords, req.IsStart)
+	err = room.Post(req.SecretWords, req.IsStart, req.Deamon)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),
@@ -112,6 +115,40 @@ func UpdateRoomIsStart(c *gin.Context) {
 
 	// isstart更新
 	err = room.UpdateIsStart(secret_words, is_start)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"message": "success",
+	})
+}
+
+// @Summary プレイヤーの状態を更新するAPI
+// @Param   id     path int true "player id"
+// @Param   status path int true "player status"
+// @Accept  json
+// @Produce json
+// @Success 200 {string} string "success"
+// @Filure  400 {string} string "引数が違います"
+// @Filure  500 {string} string err.Error()
+// @Router  /api/v1/players/{id}/status/{status} [post]
+func UpdateRoomDeamon(c *gin.Context) {
+	// パスパラメータ取得
+	secret_words := c.Param("secret_words")
+	deamon, err := strconv.Atoi(c.Param("deamon"))
+	if err != nil || deamon < 0 || 10 < deamon {
+		c.JSON(400, gin.H{
+			"message": "is_startが違います",
+		})
+		return
+	}
+
+	// isstart更新
+	err = room.UpdateDeamon(secret_words, deamon)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"message": err.Error(),

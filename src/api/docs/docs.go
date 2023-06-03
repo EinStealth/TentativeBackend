@@ -87,6 +87,41 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/rooms/{secret_words}/deamon/{deamon}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "部屋の鬼を更新するAPI",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "secret_words",
+                        "name": "secret_words",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "deamon",
+                        "name": "deamon",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/rooms": {
             "get": {
                 "consumes": [
@@ -295,7 +330,10 @@ const docTemplate = `{
             "properties": {
                 "isStart": {
                     "type": "integer"
-                }
+                },
+                "deamon": {
+                    "type": "integer"
+                },
             }
         },
         "controller.PostRoom.JsonRequest": {
@@ -306,7 +344,10 @@ const docTemplate = `{
                 },
                 "secret_words": {
                     "type": "string"
-                }
+                },
+                "deamon": {
+                    "type": "integer"
+                },
             }
         },
         "controller.GetPlayer.JsonResponse": {

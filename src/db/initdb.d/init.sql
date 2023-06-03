@@ -10,16 +10,17 @@ CREATE TABLE `rooms` (
     `id` bigint NOT NULL AUTO_INCREMENT,
     `secret_words` varchar(10),
     `is_start` boolean,
+    `deamon` int,
     PRIMARY KEY (`id`)
 );
 
 -- mock data
 INSERT INTO `rooms` VALUES
 (
-    1, "test1", 0
+    1, "test1", 0, 1
 ),
 (
-    2, "test2", 0
+    2, "test2", 0, 1
 );
 
 DROP TABLE IF EXISTS `players`;

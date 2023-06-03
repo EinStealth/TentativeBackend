@@ -29,6 +29,9 @@ func GetRouter() *gin.Engine {
 		// 部屋の状態を更新するAPI
 		v1.POST("/rooms/:secret_words/is_start/:is_start", UpdateRoomIsStart)
 
+		// 部屋の鬼を更新するAPI
+		v1.POST("/rooms/:secret_words/deamon/:deamon", UpdateRoomDeamon)
+
 		// 指定された合言葉の(ステータス)を返す
 		v1.GET("/rooms", GetRoom)
 
